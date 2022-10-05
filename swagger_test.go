@@ -246,3 +246,21 @@ func TestOauth2DefaultClientID(t *testing.T) {
 	configFunc(&cfg)
 	assert.Equal(t, "", cfg.Oauth2DefaultClientID)
 }
+
+func TestRequestInterceptor(t *testing.T) {
+	cfg := Config{}
+
+	expected := "func(request) { return request; }"
+	configFunc := RequestInterceptor(expected)
+	configFunc(&cfg)
+	assert.Equal(t, expected, cfg.RequestInterceptor)
+}
+
+func TestResponseInterceptor(t *testing.T) {
+	cfg := Config{}
+
+	expected := "func(response) { return response; }"
+	configFunc := ResponseInterceptor(expected)
+	configFunc(&cfg)
+	assert.Equal(t, expected, cfg.ResponseInterceptor)
+}

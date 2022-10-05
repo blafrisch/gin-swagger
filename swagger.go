@@ -23,6 +23,8 @@ type swaggerConfig struct {
 	DeepLinking              bool
 	PersistAuthorization     bool
 	Oauth2DefaultClientID    string
+	RequestInterceptor       string
+	ResponseInterceptor      string
 }
 
 // Config stores ginSwagger configuration variables.
@@ -36,6 +38,8 @@ type Config struct {
 	DeepLinking              bool
 	PersistAuthorization     bool
 	Oauth2DefaultClientID    string
+	RequestInterceptor       string
+	ResponseInterceptor      string
 }
 
 func (config Config) toSwaggerConfig() swaggerConfig {
@@ -50,6 +54,8 @@ func (config Config) toSwaggerConfig() swaggerConfig {
 		Title:                 config.Title,
 		PersistAuthorization:  config.PersistAuthorization,
 		Oauth2DefaultClientID: config.Oauth2DefaultClientID,
+		RequestInterceptor:    config.RequestInterceptor,
+		ResponseInterceptor:   config.ResponseInterceptor,
 	}
 }
 
@@ -105,6 +111,20 @@ func Oauth2DefaultClientID(oauth2DefaultClientID string) func(*Config) {
 	}
 }
 
+// RequestInterceptor sets the request interceptor function used for intercepting requests
+func RequestInterceptor(requestInterceptor string) func(*Config) {
+	return func(c *Config) {
+		c.RequestInterceptor = requestInterceptor
+	}
+}
+
+// RequestInterceptor sets the request interceptor function used for intercepting requests
+func ResponseInterceptor(responseInterceptor string) func(*Config) {
+	return func(c *Config) {
+		c.ResponseInterceptor = responseInterceptor
+	}
+}
+
 // WrapHandler wraps `http.Handler` into `gin.HandlerFunc`.
 func WrapHandler(handler *webdav.Handler, options ...func(*Config)) gin.HandlerFunc {
 	var config = Config{
@@ -116,6 +136,8 @@ func WrapHandler(handler *webdav.Handler, options ...func(*Config)) gin.HandlerF
 		DeepLinking:              true,
 		PersistAuthorization:     false,
 		Oauth2DefaultClientID:    "",
+		RequestInterceptor:       "(a => a)",
+		ResponseInterceptor:      "(a => a)",
 	}
 
 	for _, c := range options {
@@ -296,6 +318,8 @@ window.onload = function() {
   // Build a system
   const ui = SwaggerUIBundle({
     url: "{{.URL}}",
+	requestInterceptor: {{.RequestInterceptor}},
+	responseInterceptor: {{.ResponseInterceptor}},
     dom_id: '#swagger-ui',
     validatorUrl: null,
     oauth2RedirectUrl: {{.Oauth2RedirectURL}},
