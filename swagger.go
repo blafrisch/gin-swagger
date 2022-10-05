@@ -23,8 +23,8 @@ type swaggerConfig struct {
 	DeepLinking              bool
 	PersistAuthorization     bool
 	Oauth2DefaultClientID    string
-	RequestInterceptor       string
-	ResponseInterceptor      string
+	RequestInterceptor       template.JS
+	ResponseInterceptor      template.JS
 }
 
 // Config stores ginSwagger configuration variables.
@@ -54,8 +54,8 @@ func (config Config) toSwaggerConfig() swaggerConfig {
 		Title:                 config.Title,
 		PersistAuthorization:  config.PersistAuthorization,
 		Oauth2DefaultClientID: config.Oauth2DefaultClientID,
-		RequestInterceptor:    config.RequestInterceptor,
-		ResponseInterceptor:   config.ResponseInterceptor,
+		RequestInterceptor:    template.JS(config.RequestInterceptor),
+		ResponseInterceptor:   template.JS(config.ResponseInterceptor),
 	}
 }
 
