@@ -318,8 +318,8 @@ window.onload = function() {
   // Build a system
   const ui = SwaggerUIBundle({
     url: "{{.URL}}",
-	requestInterceptor: {{.RequestInterceptor}},
-	responseInterceptor: {{.ResponseInterceptor}},
+    requestInterceptor: {{.RequestInterceptor}},
+    responseInterceptor: {{.ResponseInterceptor}},
     dom_id: '#swagger-ui',
     validatorUrl: null,
     oauth2RedirectUrl: {{.Oauth2RedirectURL}},
@@ -331,10 +331,10 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
-	layout: "StandaloneLayout",
+    layout: "StandaloneLayout",
     docExpansion: "{{.DocExpansion}}",
-	deepLinking: {{.DeepLinking}},
-	defaultModelsExpandDepth: {{.DefaultModelsExpandDepth}}
+    deepLinking: {{.DeepLinking}},
+    defaultModelsExpandDepth: {{.DefaultModelsExpandDepth}}
   })
 
   const defaultClientId = "{{.Oauth2DefaultClientID}}";
